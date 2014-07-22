@@ -1,4 +1,4 @@
-#include "minear.hpp"
+#include "../src/minear.hpp"
 #include <iostream>
 
 using namespace std;
@@ -12,11 +12,19 @@ int main()
       << 3.1 << 3.2 << 3.3;
     
     Matrix<double> b(a);
+    Matrix<double> I(3,3);
+    I << 1 << 0 << 0
+      << 0 << 1 << 0
+      << 0 << 0 << 1;
       
     cout << "a = " << endl << a << endl;
     cout << "a + b = " << endl << a+b << endl;
     cout << "a - b = " << endl << a-b << endl;
     cout << "-a" << endl << -a << endl;
+    cout << "a * I" << endl << a*I << endl;
+    cout << "I * b" << endl << I*b << endl;
+    cout << "a * b" << endl << a*b << endl;
+    cout << "b * a" << endl << b*a << endl;
     /*
     for (unsigned int i = 0; i < a.n_rows; i++)
     {

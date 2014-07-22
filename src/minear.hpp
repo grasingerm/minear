@@ -15,6 +15,7 @@ namespace minear
         /* constructors and destructors */
         Matrix<T>(const unsigned int n, const unsigned int m) :
             n_rows(n), n_cols(m), data(new T[n*m]), insertion_index(0) {};
+        Matrix<T>(const unsigned int n, const unsigned int m, const T value);
         
         Matrix<T>(const Matrix<T>&);
         Matrix<T>& operator=(const Matrix<T>&);
@@ -52,6 +53,12 @@ namespace minear
         T* data;
         unsigned int insertion_index;
     };
+    
+    template <class T> Matrix<T>::Matrix(const unsigned int n, 
+        const unsigned int m, const T value) : Matrix<T>(n,m)
+    { 
+        for (unsigned int i = 0; i < n*m; i++) data[i] = value;
+    }
     
     template <class T> Matrix<T>::Matrix(const Matrix<T>& a) : 
         n_rows(a.n_rows), n_cols(a.n_cols)
@@ -142,6 +149,20 @@ namespace minear
             for (unsigned int j = 0; j < a.n_cols; j++)
                 result(i,j) = -a(i,j);
                 
+        return result;
+    }
+    
+    template <class T> Matrix<T> operator*(const Matrix<T>& a,
+        const Matrix<T>& b)
+    {
+        Matrix<T> result(a.n_rows,b.n_cols,0);
+        for (unsigned int i = 0; i < a.n_rows; i++)
+        {
+            for (unsigned int j = 0; j < b.n_cols; j++)
+                for (unsigned int k = 0; k < b.n_rows; k++)
+                    result(i,j) += a(i,k)*b(k,j);
+        }
+        
         return result;
     }
 }
