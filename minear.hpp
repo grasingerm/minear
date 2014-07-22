@@ -14,7 +14,7 @@ namespace minear
         
         /* constructors and destructors */
         Matrix<T>(const unsigned int n, const unsigned int m) :
-            insertion_index(0), data(new T[n*m]) {};
+            n_rows(n), n_cols(m), data(new T[n*m]), insertion_index(0) {};
         
         Matrix<T>(const Matrix<T>&);
         Matrix<T>& operator=(const Matrix<T>&);
@@ -22,7 +22,7 @@ namespace minear
         Matrix<T>(Matrix<T>&&);
         Matrix<T>& operator=(Matrix<T>&&);
         
-        ~Matrix<T>();
+        ~Matrix<T>() { delete[] data; }
         
         /* data insertion */
         Matrix<T>& operator<<(const T value);
@@ -41,7 +41,7 @@ namespace minear
             for (unsigned int i = 0; i < a.n_rows; i++)
             {
                 for (unsigned int j = 0; j < a.n_cols; j++)
-                    stream << " " << j;
+                    stream << " " << a(i,j);
                 stream << std::endl;
             }
             
@@ -49,11 +49,11 @@ namespace minear
         }
             
     private:
-        std::unique_ptr<T> data;
+        T* data;
         unsigned int insertion_index;
     };
     
-    template <class T> Matrix::Matrix<T>(const Matrix<T>& a) : 
+    template <class T> Matrix<T>::Matrix(const Matrix<T>& a) : 
         n_rows(a.n_rows), n_cols(a.n_cols)
     {
         data = new T[n_rows*n_cols];
@@ -62,38 +62,39 @@ namespace minear
                 data[i*n_rows + j] = a(i,j);
     }
     
-    template <class T> Matrix<T>& Matrix::operator=(const Matrix<T>& a)
+    template <class T> Matrix<T>& Matrix<T>::operator=(const Matrix<T>& a)
     {
         insertion_index = 0;
-        std::unique_ptr<T> p = new T[a.n_rows*a.n_cols];
+        T* p = new T[a.n_rows*a.n_cols];
         
         for (unsigned int i = 0; i < n_rows; i++)
             for (unsigned int j = 0; j < n_cols; j++)
                 data[i*n_rows + j] = a(i,j);
         
+        delete[] data;
         data = p;
         n_rows = a.n_rows;
         n_cols = a.n_cols;
         return *this;
     }
     
-    template <class T> Matrix::Matrix<T>(Matrix<T>&& a) :
-        insertion_index(0), data(a.data), n_rows(a.n_rows), n_cols(a.n_cols)
+    template <class T> Matrix<T>::Matrix(Matrix<T>&& a) :
+        n_rows(a.n_rows), n_cols(a.n_cols), data(a.data), insertion_index(0)
     {
-        a.data = std::null_ptr;
+        a.data = nullptr;
         a.n_rows = 0;
         a.n_cols = 0;
         a.insertion_index = 0;
     }
     
-    template <class T> Matrix<T>& Matrix::operator=(Matrix<T>&& a)
+    template <class T> Matrix<T>& Matrix<T>::operator=(Matrix<T>&& a)
     {
         insertion_index = 0;
         data = a.data;
         n_rows = a.n_rows;
         n_cols = a.n_cols;
         
-        a.data = std::null_ptr;
+        a.data = nullptr;
         a.n_rows = 0;
         a.n_cols = 0;
         a.insertion_index = 0;
@@ -101,7 +102,7 @@ namespace minear
         return *this;
     }
     
-    template <class T> Matrix<T> Matrix::operator<<(const T value)
+    template <class T> Matrix<T>& Matrix<T>::operator<<(const T value)
     {
         data[insertion_index] = value;
         insertion_index++;
@@ -109,7 +110,8 @@ namespace minear
         return *this;
     }
     
-    template <class T> Matrix<T>& operator+(const Matrix<T>& a, Matrix<T>& b)
+    template <class T> Matrix<T> operator+(const Matrix<T>& a, 
+        const Matrix<T>& b)
     {
         /* TODO: make sure matrices are the same size */
         Matrix<T> result(a.n_rows,a.n_cols);
@@ -120,7 +122,8 @@ namespace minear
         return result;
     }
     
-    template <class T> Matrix<T>& operator-(const Matrix<T>& a, Matrix<T>& b)
+    template <class T> Matrix<T> operator-(const Matrix<T>& a, 
+        const Matrix<T>& b)
     {
         /* TODO: make sure matrices are the same size */
         Matrix<T> result(a.n_rows,a.n_cols);
@@ -131,7 +134,7 @@ namespace minear
         return result;
     }
     
-    template <class T> Matrix<T>& operator-(const Matrix<T>& a)
+    template <class T> Matrix<T> operator-(const Matrix<T>& a)
     {
         /* TODO: make sure matrices are the same size */
         Matrix<T> result(a.n_rows,a.n_cols);
