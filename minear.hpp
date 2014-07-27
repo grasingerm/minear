@@ -47,6 +47,9 @@ namespace minear
             
             return stream;
         }
+        
+        /* memory management */
+        void resize(const unsigned int, const unsigned int);
             
     private:
         T* data;
@@ -143,6 +146,14 @@ namespace minear
                 result(i,j) = -a(i,j);
                 
         return result;
+    }
+    
+    template <class T> Matrix<T>::resize(const unsigned int n,
+        const unsigned int m)
+    {
+        double* p = data;
+        data = new double[n*m];
+        delete[] p;
     }
 }
 
