@@ -11,9 +11,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -g -std=c++11 -pedantic -pedantic-err
 set(CMAKE_BINARY_DIR build)
 set(EXECUTABLE_OUTPUT_PATH bin)
 
-
 # dependencies
-add_executable(test main.cpp)
+add_executable(base base.cpp)
 
-install(TARGETS test DESTINATION bin)
+target_link_libraries(base armadillo)
+
+install(TARGETS base DESTINATION bin)
 

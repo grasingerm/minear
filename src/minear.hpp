@@ -13,6 +13,9 @@ namespace minear
         unsigned int n_cols;
         
         /* constructors and destructors */
+        Matrix<T>() : n_rows(10), n_cols(10), data(new T[100]), 
+            insertion_index(0) {}
+        
         Matrix<T>(const unsigned int n, const unsigned int m) :
             n_rows(n), n_cols(m), data(new T[n*m]), insertion_index(0) {};
         Matrix<T>(const unsigned int n, const unsigned int m, const T value);
@@ -155,20 +158,6 @@ namespace minear
         return result;
     }
     
-    template <class T> Matrix<T>::resize(const unsigned int n,
-        const unsigned int m)
-    {
-        if (sizeof(data)/sizeof(T) < n*m)
-        {
-            double* p = data;
-            data = new double[n*m];
-            delete[] p;
-            insertion_index = 0;
-        }
-        n_rows = n;
-        n_cols = m;
-    }
-        
     template <class T> Matrix<T> operator*(const Matrix<T>& a,
         const Matrix<T>& b)
     {
@@ -181,6 +170,20 @@ namespace minear
         }
         
         return result;
+    }
+    
+    template <class T> void Matrix<T>::resize(const unsigned int n,
+        const unsigned int m)
+    {
+        if (sizeof(data)/sizeof(T) < n*m)
+        {
+            double* p = data;
+            data = new double[n*m];
+            delete[] p;
+            insertion_index = 0;
+        }
+        n_rows = n;
+        n_cols = m;
     }
 }
 

@@ -1,5 +1,5 @@
-#include "../minear.hpp"
-#include "../debug.hpp"
+#include "../src/minear.hpp"
+#include "../src/debug.hpp"
 #include <armadillo>
 #include <cassert>
 
@@ -28,9 +28,11 @@ int main()
         B = mat(inner, outter_b);
         B.randu();
         
+        cout << "resizing" << endl;
         C.resize(outter_a, inner);
         D.resize(inner, outter_b);
         
+        cout << "copying" << endl;
         for (unsigned int i = 0; i < outter_a; i++)
             for (unsigned int j = 0; j < inner; j++)
                 C(i,j) = A(i,j);
@@ -39,18 +41,24 @@ int main()
             for (unsigned int j = 0; j < outter_b; j++)
                 D(i,j) = B(i,j);
         
+        cout << "computations" << endl;
+        
+        cout << "multiply" << endl;
         E = A*B;
         F = C*D;
         ASSERT_MAT_NEAR(F, E, 1e-5);
         
+        cout << "add" << endl;
         E = A+B;
         F = C+D;
         ASSERT_MAT_NEAR(F, E, 1e-5);
         
+        cout << "subtract" << endl;
         E = A-B;
         F = C-D;
         ASSERT_MAT_NEAR(F, E, 1e-5);
         
+        cout << "subtract" << endl;
         E = B-A;
         F = C-D;
         ASSERT_MAT_NEAR(F, E, 1e-5);
