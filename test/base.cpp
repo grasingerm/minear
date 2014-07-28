@@ -46,7 +46,11 @@ int main()
         cout << "multiply" << endl;
         E = A*B;
         F = C*D;
-        ASSERT_MAT_NEAR(F, E, 1e-5);
+        cout << E.n_rows << " " << F.n_rows << endl;
+        cout << E.n_cols << " " << F.n_cols << endl;
+        for (unsigned int i = 0; i < E.n_rows; i++)
+            for (unsigned int j = 0; j < E.n_cols; j++)
+                ASSERT_NEAR(F(i,j), E(i,j), 1e-5);
         
         cout << "add" << endl;
         E = A+B;

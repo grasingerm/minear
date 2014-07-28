@@ -182,6 +182,7 @@ namespace minear
             delete[] p;
             insertion_index = 0;
         }
+        
         n_rows = n;
         n_cols = m;
     }
