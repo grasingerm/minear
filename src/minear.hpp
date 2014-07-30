@@ -79,17 +79,13 @@ namespace minear
     
     template <class T> Matrix<T>& Matrix<T>::operator=(const Matrix<T>& a)
     {
+        resize(a.n_rows, a.n_cols);
         insertion_index = 0;
-        T* p = new T[a.n_rows*a.n_cols];
         
         for (unsigned int i = 0; i < n_rows; i++)
             for (unsigned int j = 0; j < n_cols; j++)
                 (*this)(i,j) = a(i,j);
         
-        delete[] data;
-        data = p;
-        n_rows = a.n_rows;
-        n_cols = a.n_cols;
         return *this;
     }
     
@@ -110,9 +106,6 @@ namespace minear
         n_cols = a.n_cols;
         
         a.data = nullptr;
-        a.n_rows = 0;
-        a.n_cols = 0;
-        a.insertion_index = 0;
         
         return *this;
     }
