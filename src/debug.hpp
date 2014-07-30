@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 #define ASSERT_NEAR(approx, act, tol) \
-    if (!((act) == 0)) \
+    if (((act) == 0)) \
         assert(abs((approx)) < tol); \
     else \
         assert(abs((approx)-(act))/abs((act)) < tol)

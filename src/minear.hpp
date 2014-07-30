@@ -33,11 +33,11 @@ namespace minear
         void reset_index() { insertion_index = 0; }
              
         /* data accessors */
-        T& operator()(const unsigned int i, const unsigned int j)
-            { return data[i*n_rows + j]; }
-        const T& operator() (const unsigned int i, 
-            const unsigned int j) const
-            { return data[i*n_rows + j]; }
+        inline T& operator()(const unsigned int i, const unsigned int j)
+            { return data[i*n_cols + j]; }
+        inline const T& operator() (const unsigned int i, const unsigned int j) 
+            const
+            { return data[i*n_cols + j]; }
         
         /* printing */
         friend std::ostream& operator<< (std::ostream& stream, const Matrix& a)
@@ -63,7 +63,9 @@ namespace minear
     template <class T> Matrix<T>::Matrix(const unsigned int n, 
         const unsigned int m, const T value) : Matrix<T>(n,m)
     { 
-        for (unsigned int i = 0; i < n*m; i++) data[i] = value;
+        for (unsigned int i = 0; i < n; i++)
+            for (unsigned int j = 0; j < m; j++)
+                (*this)(i,j) = value;
     }
     
     template <class T> Matrix<T>::Matrix(const Matrix<T>& a) : 
@@ -72,7 +74,7 @@ namespace minear
         data = new T[n_rows*n_cols];
         for (unsigned int i = 0; i < n_rows; i++)
             for (unsigned int j = 0; j < n_cols; j++)
-                data[i*n_rows + j] = a(i,j);
+                (*this)(i,j) = a(i,j);
     }
     
     template <class T> Matrix<T>& Matrix<T>::operator=(const Matrix<T>& a)
@@ -82,7 +84,7 @@ namespace minear
         
         for (unsigned int i = 0; i < n_rows; i++)
             for (unsigned int j = 0; j < n_cols; j++)
-                data[i*n_rows + j] = a(i,j);
+                (*this)(i,j) = a(i,j);
         
         delete[] data;
         data = p;
