@@ -101,7 +101,12 @@ namespace minear
     template <class T> Matrix<T>& Matrix<T>::operator=(Matrix<T>&& a)
     {
         insertion_index = 0;
+        
+        /* delete old memory, move rvalue memory in */
+        T* p = data;
         data = a.data;
+        delete[] p;
+        
         n_rows = a.n_rows;
         n_cols = a.n_cols;
         
@@ -172,8 +177,8 @@ namespace minear
     {
         if (sizeof(data)/sizeof(T) < n*m)
         {
-            double* p = data;
-            data = new double[n*m];
+            T* p = data;
+            data = new T[n*m];
             delete[] p;
             insertion_index = 0;
         }

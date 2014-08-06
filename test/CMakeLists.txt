@@ -13,10 +13,11 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 
 # dependencies
 add_executable(base base.cpp)
+add_executable(memory memory.cpp)
 
 include_directories(../src)
 
 target_link_libraries(base armadillo)
 
-install(TARGETS base DESTINATION bin)
+install(TARGETS base memory DESTINATION bin)
 
