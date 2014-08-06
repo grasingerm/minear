@@ -92,10 +92,7 @@ namespace minear
     template <class T> Matrix<T>::Matrix(Matrix<T>&& a) :
         n_rows(a.n_rows), n_cols(a.n_cols), data(a.data), insertion_index(0)
     {
-        a.data = nullptr;
-        a.n_rows = 0;
-        a.n_cols = 0;
-        a.insertion_index = 0;
+        a.data = nullptr; /* ensure nothing funny happens when a is deleted */
     }
     
     template <class T> Matrix<T>& Matrix<T>::operator=(Matrix<T>&& a)
