@@ -13,8 +13,7 @@ namespace minear
         unsigned int n_cols;
         
         /* constructors and destructors */
-        Matrix<T>() : n_rows(10), n_cols(10), data(new T[100]), 
-            insertion_index(0) {}
+        Matrix<T>() : n_rows(0), n_cols(0), data(nullptr), insertion_index(0) {}
         
         Matrix<T>(const unsigned int n, const unsigned int m) :
             n_rows(n), n_cols(m), data(new T[n*m]), insertion_index(0) {};
