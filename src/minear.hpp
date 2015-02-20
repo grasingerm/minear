@@ -41,9 +41,9 @@ namespace minear
         /* printing */
         friend std::ostream& operator<< (std::ostream& stream, const Matrix& a)
         {
-            for (unsigned int i = 0; i < a.n_rows; i++)
+            for (unsigned int i = 0; i < a.n_rows; ++i)
             {
-                for (unsigned int j = 0; j < a.n_cols; j++)
+                for (unsigned int j = 0; j < a.n_cols; ++j)
                     stream << " " << a(i,j);
                 stream << std::endl;
             }
@@ -62,8 +62,8 @@ namespace minear
     template <class T> Matrix<T>::Matrix(const unsigned int n, 
         const unsigned int m, const T value) : Matrix<T>(n,m)
     { 
-        for (unsigned int i = 0; i < n; i++)
-            for (unsigned int j = 0; j < m; j++)
+        for (unsigned int i = 0; i < n; ++i)
+            for (unsigned int j = 0; j < m; ++j)
                 (*this)(i,j) = value;
     }
     
@@ -71,8 +71,8 @@ namespace minear
         n_rows(a.n_rows), n_cols(a.n_cols)
     {
         data = new T[n_rows*n_cols];
-        for (unsigned int i = 0; i < n_rows; i++)
-            for (unsigned int j = 0; j < n_cols; j++)
+        for (unsigned int i = 0; i < n_rows; ++i)
+            for (unsigned int j = 0; j < n_cols; ++j)
                 (*this)(i,j) = a(i,j);
     }
     
@@ -81,8 +81,8 @@ namespace minear
         resize(a.n_rows, a.n_cols);
         insertion_index = 0;
         
-        for (unsigned int i = 0; i < n_rows; i++)
-            for (unsigned int j = 0; j < n_cols; j++)
+        for (unsigned int i = 0; i < n_rows; ++i)
+            for (unsigned int j = 0; j < n_cols; ++j)
                 (*this)(i,j) = a(i,j);
         
         return *this;
@@ -124,8 +124,8 @@ namespace minear
     {
         /* TODO: make sure matrices are the same size */
         Matrix<T> result(a.n_rows,a.n_cols);
-        for (unsigned int i = 0; i < a.n_rows; i++)
-            for (unsigned int j = 0; j < a.n_cols; j++)
+        for (unsigned int i = 0; i < a.n_rows; ++i)
+            for (unsigned int j = 0; j < a.n_cols; ++j)
                 result(i,j) = a(i,j) + b(i,j);
                 
         return result;
@@ -136,8 +136,8 @@ namespace minear
     {
         /* TODO: make sure matrices are the same size */
         Matrix<T> result(a.n_rows,a.n_cols);
-        for (unsigned int i = 0; i < a.n_rows; i++)
-            for (unsigned int j = 0; j < a.n_cols; j++)
+        for (unsigned int i = 0; i < a.n_rows; ++i)
+            for (unsigned int j = 0; j < a.n_cols; ++j)
                 result(i,j) = a(i,j) - b(i,j);
                 
         return result;
@@ -147,8 +147,8 @@ namespace minear
     {
         /* TODO: make sure matrices are the same size */
         Matrix<T> result(a.n_rows,a.n_cols);
-        for (unsigned int i = 0; i < a.n_rows; i++)
-            for (unsigned int j = 0; j < a.n_cols; j++)
+        for (unsigned int i = 0; i < a.n_rows; ++i)
+            for (unsigned int j = 0; j < a.n_cols; ++j)
                 result(i,j) = -a(i,j);
                 
         return result;
@@ -158,10 +158,10 @@ namespace minear
         const Matrix<T>& b)
     {
         Matrix<T> result(a.n_rows,b.n_cols,0);
-        for (unsigned int i = 0; i < a.n_rows; i++)
+        for (unsigned int i = 0; i < a.n_rows; ++i)
         {
-            for (unsigned int j = 0; j < b.n_cols; j++)
-                for (unsigned int k = 0; k < b.n_rows; k++)
+            for (unsigned int j = 0; j < b.n_cols; ++j)
+                for (unsigned int k = 0; k < b.n_rows; ++k)
                     result(i,j) += a(i,k)*b(k,j);
         }
         
