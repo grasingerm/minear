@@ -25,6 +25,8 @@ int main()
     cout << "I * b" << endl << I*b << endl;
     cout << "a * b" << endl << a*b << endl;
     cout << "b * a" << endl << b*a << endl;
+    cout << "2.0 * a" << endl << 2.0*a << endl;
+    cout << "a * 2.0" << endl << a*2.0 << endl;
     
     cout << "Printing 'a' with range-based for loop" << endl;
     for (auto& a_i : a)

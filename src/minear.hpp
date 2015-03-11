@@ -68,9 +68,7 @@ namespace minear
     template <class T> Matrix<T>::Matrix(const unsigned int n, 
         const unsigned int m, const T value) : Matrix<T>(n,m)
     { 
-        for (unsigned int i = 0; i < n; ++i)
-            for (unsigned int j = 0; j < m; ++j)
-                (*this)(i,j) = value;
+        for (auto& elem : *this) elem = value;
     }
     
     template <class T> Matrix<T>::Matrix(const Matrix<T>& a) : 
@@ -171,6 +169,22 @@ namespace minear
                     result(i,j) += a(i,k)*b(k,j);
         }
         
+        return result;
+    }
+
+    template <class T> Matrix<T> operator*(const Matrix<T>& a, const T& s)
+    {
+        Matrix<T> result(a);
+        for (auto& elem : result) elem *= s;
+
+        return result;
+    }
+
+    template <class T> Matrix<T> operator*(const T& s, const Matrix<T>& a)
+    {
+        Matrix<T> result(a);
+        for (auto& elem : result) elem *= s;
+
         return result;
     }
     
