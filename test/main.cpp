@@ -25,14 +25,10 @@ int main()
     cout << "I * b" << endl << I*b << endl;
     cout << "a * b" << endl << a*b << endl;
     cout << "b * a" << endl << b*a << endl;
-    /*
-    for (unsigned int i = 0; i < a.n_rows; i++)
-    {
-        for (unsigned int j = 0; j < a.n_cols; j++)
-            cout << a(i,j) << " ";
-        cout << endl;
-    }
-    */
+    
+    cout << "Printing 'a' with range-based for loop" << endl;
+    for (auto& a_i : a)
+        cout << a_i << endl;
 
     return 0;
 }

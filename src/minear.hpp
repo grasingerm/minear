@@ -53,6 +53,12 @@ namespace minear
         
         /* memory management */
         void resize(const unsigned int, const unsigned int);
+
+        /* iterator */
+        typedef T* iterator;
+        typedef const T* const_iterator;
+        iterator begin() { return data; }
+        iterator end() { return (data + n_rows * n_cols); }
             
     private:
         T* data;

@@ -14,6 +14,7 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 # dependencies
 add_executable(base base.cpp)
 add_executable(memory memory.cpp)
+add_executable(main main.cpp)
 
 include_directories(../src)
 
