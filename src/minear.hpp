@@ -59,6 +59,10 @@ namespace minear
         typedef const T* const_iterator;
         iterator begin() { return data; }
         iterator end() { return (data + n_rows * n_cols); }
+        const_iterator begin() const { return data; }
+        const_iterator end() const { return (data + n_rows * n_cols); }
+        const_iterator cbegin() const { return data; }
+        const_iterator cend() const { return (data + n_rows * n_cols); }
             
     private:
         T* data;
