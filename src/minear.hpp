@@ -33,10 +33,21 @@ namespace minear
              
         /* data accessors */
         inline T& operator()(const unsigned int i, const unsigned int j)
-            { return data[i*n_cols + j]; }
+        { 
+            if (i >= n_rows || j >= n_cols) 
+                throw std::out_of_range ("Trying to access Matrix out of range."); 
+            
+            return data[i*n_cols + j];
+        }
+
         inline const T& operator() (const unsigned int i, const unsigned int j) 
             const
-            { return data[i*n_cols + j]; }
+        { 
+            if (i >= n_rows || j >= n_cols) 
+                throw std::out_of_range ("Trying to access Matrix out of range."); 
+            
+            return data[i*n_cols + j];
+        }
         
         /* printing */
         friend std::ostream& operator<< (std::ostream& stream, const Matrix& a)
